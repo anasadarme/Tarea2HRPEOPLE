@@ -251,15 +251,43 @@
 
   .path-figure{margin-top:28px;}
 
+  /* ---------- CASE TOGGLE ---------- */
+  .cases-toggle{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--accent2); color:#1A0F00; border:none; border-radius:999px;
+    padding:13px 24px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.8rem;
+    letter-spacing:.07em; text-transform:uppercase; cursor:pointer;
+    box-shadow:var(--shadow); transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .cases-toggle:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.16); }
+  .cases-toggle:focus-visible{ outline:3px solid var(--accent3); outline-offset:3px; }
+  .cases-toggle .cases-toggle-icon{ display:flex; }
+  .cases-toggle .cases-toggle-icon svg{ width:13px; height:13px; transition:transform .3s ease; }
+  .cases-toggle.open .cases-toggle-icon svg{ transform:rotate(135deg); }
+
+  .cases-wrap{
+    display:grid; grid-template-rows:0fr; opacity:0;
+    transition:grid-template-rows .5s ease, opacity .4s ease, margin-top .5s ease;
+  }
+  .cases-wrap.open{ grid-template-rows:1fr; opacity:1; margin-top:26px; }
+  .cases-inner{ overflow:hidden; display:flex; flex-direction:column; gap:24px; }
+
   /* ---------- CASE ---------- */
   .case-card{
     background:var(--surface); border:1px solid var(--line); border-radius:14px;
-    padding:28px 28px 26px; box-shadow:var(--shadow);
-    display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start;
+    padding:22px 22px 26px; box-shadow:var(--shadow);
     transition:transform .25s ease;
   }
   .case-card:hover{ transform:translateY(-3px); }
-  @media (max-width:560px){ .case-card{grid-template-columns:1fr;} }
+  .case-image{
+    border-radius:10px; overflow:hidden; margin-bottom:20px; background:var(--chip);
+    display:block; line-height:0;
+  }
+  .case-image svg{ width:100%; height:auto; display:block; }
+  .case-body{
+    display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start;
+  }
+  @media (max-width:560px){ .case-body{grid-template-columns:1fr;} }
   .case-mark{
     width:52px; height:52px; border-radius:50%; background:var(--accent2-soft);
     display:flex; align-items:center; justify-content:center;
@@ -502,24 +530,99 @@
     </figure>
   </section>
 
-  <!-- ============ 4. EJEMPLO PRÁCTICO ============ -->
+  <!-- ============ 4. EJEMPLOS PRÁCTICOS ============ -->
   <section class="observe">
-    <div class="section-head"><span class="idx">04</span><h2 class="section-title">Ejemplo práctico en un entorno organizacional</h2></div>
+    <div class="section-head"><span class="idx">04</span><h2 class="section-title">Ejemplos prácticos en un entorno organizacional</h2></div>
+    <p class="lede">Dos aplicaciones reales del modelo, en contextos organizacionales muy distintos.</p>
 
-    <div class="case-card">
-      <div class="case-mark">HB</div>
-      <div>
-        <h3>Hellobrand — empresa tecnológica, Bogotá (Colombia)</h3>
-        <div class="case-meta">Valero Romero &amp; Barragán Hinestroza (2023) · Politécnico Grancolombiano</div>
-        <p>
-          Un estudio de caso aplicó las tres dimensiones del modelo HERO a esta empresa tecnológica bogotana, evaluando recursos disponibles, demandas laborales, estado de los empleados y resultados. La organización mostró alta autonomía, liderazgo percibido positivamente y bajo nivel de burnout entre los colaboradores evaluados, calificando como una organización saludable según los criterios del modelo.
-        </p>
-        <div class="case-findings">
-          <span class="pill">Alta autonomía</span>
-          <span class="pill">Liderazgo positivo</span>
-          <span class="pill">Bajo burnout</span>
-          <span class="pill">Organización saludable</span>
+    <button class="cases-toggle" id="casesToggle" type="button" aria-expanded="false" aria-controls="casesWrap">
+      <span class="cases-toggle-txt">Ver ejemplos prácticos</span>
+      <span class="cases-toggle-icon"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    </button>
+
+    <div class="cases-wrap" id="casesWrap">
+      <div class="cases-inner">
+
+        <div class="case-card">
+          <div class="case-image">
+            <svg viewBox="0 0 400 160" role="img" aria-label="Ilustración de una laptop con líneas de código y una burbuja de chat, representando una empresa tecnológica">
+              <rect width="400" height="160" fill="var(--chip)"/>
+              <rect x="110" y="108" width="150" height="10" rx="3" fill="var(--ink-soft)" opacity=".25"/>
+              <rect x="130" y="46" width="110" height="66" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.4"/>
+              <rect x="142" y="58" width="60" height="6" rx="3" fill="var(--accent)"/>
+              <rect x="142" y="70" width="80" height="6" rx="3" fill="var(--accent)" opacity=".55"/>
+              <rect x="142" y="82" width="46" height="6" rx="3" fill="var(--accent)" opacity=".55"/>
+              <path d="M262 40h58a8 8 0 0 1 8 8v26a8 8 0 0 1-8 8h-30l-12 12v-12h-16a8 8 0 0 1-8-8v-26a8 8 0 0 1 8-8z" fill="var(--accent2-soft)" stroke="var(--accent2)" stroke-width="2"/>
+              <circle cx="280" cy="58" r="3" fill="var(--accent2)"/>
+              <circle cx="292" cy="58" r="3" fill="var(--accent2)"/>
+              <circle cx="304" cy="58" r="3" fill="var(--accent2)"/>
+              <circle cx="60" cy="58" r="20" fill="none" stroke="var(--accent3)" stroke-width="3"/>
+              <circle cx="60" cy="58" r="7" fill="var(--accent3)"/>
+              <g stroke="var(--accent3)" stroke-width="3" stroke-linecap="round">
+                <line x1="60" y1="32" x2="60" y2="40"/>
+                <line x1="60" y1="76" x2="60" y2="84"/>
+                <line x1="34" y1="58" x2="42" y2="58"/>
+                <line x1="78" y1="58" x2="86" y2="58"/>
+              </g>
+            </svg>
+          </div>
+          <div class="case-body">
+            <div class="case-mark">HB</div>
+            <div>
+              <h3>Hellobrand — empresa tecnológica, Bogotá (Colombia)</h3>
+              <div class="case-meta">Valero Romero &amp; Barragán Hinestroza (2023) · Politécnico Grancolombiano</div>
+              <p>
+                Un estudio de caso aplicó las tres dimensiones del modelo HERO a esta empresa tecnológica bogotana, evaluando recursos disponibles, demandas laborales, estado de los empleados y resultados. La organización mostró alta autonomía, liderazgo percibido positivamente y bajo nivel de burnout entre los colaboradores evaluados, calificando como una organización saludable según los criterios del modelo.
+              </p>
+              <div class="case-findings">
+                <span class="pill">Alta autonomía</span>
+                <span class="pill">Liderazgo positivo</span>
+                <span class="pill">Bajo burnout</span>
+                <span class="pill">Organización saludable</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="case-card">
+          <div class="case-image">
+            <svg viewBox="0 0 400 160" role="img" aria-label="Ilustración de un puesto de mercado con un marcador de ubicación, representando microempresas en zona de frontera">
+              <rect width="400" height="160" fill="var(--chip)"/>
+              <path d="M120 60L200 30L280 60Z" fill="var(--accent2)"/>
+              <rect x="126" y="60" width="148" height="8" fill="var(--accent2-soft)"/>
+              <g fill="var(--surface)" opacity=".9">
+                <path d="M148 60L162 34L176 60Z"/>
+                <path d="M200 60L214 30L228 60Z"/>
+                <path d="M252 60L266 34L280 60Z"/>
+              </g>
+              <rect x="130" y="68" width="140" height="46" rx="4" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.4" opacity=".9"/>
+              <rect x="140" y="78" width="26" height="26" rx="3" fill="var(--accent)" opacity=".85"/>
+              <rect x="172" y="78" width="26" height="26" rx="3" fill="var(--accent3)" opacity=".85"/>
+              <rect x="204" y="78" width="26" height="26" rx="3" fill="var(--accent2)" opacity=".85"/>
+              <path d="M320 32c12 0 22 9.4 22 21c0 15-22 39-22 39s-22-24-22-39c0-11.6 10-21 22-21z" fill="var(--accent3)"/>
+              <circle cx="320" cy="53" r="8" fill="var(--surface)"/>
+              <line x1="20" y1="130" x2="380" y2="130" stroke="var(--ink-soft)" stroke-width="2" stroke-dasharray="6 6" opacity=".4"/>
+              <text x="200" y="150" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-soft)" opacity=".8">frontera colombo-venezolana</text>
+            </svg>
+          </div>
+          <div class="case-body">
+            <div class="case-mark">VR</div>
+            <div>
+              <h3>Microempresas de Villa del Rosario, Norte de Santander (Colombia)</h3>
+              <div class="case-meta">Herrera León &amp; Ordoñez Santos (2025) · Pensamiento &amp; Gestión</div>
+              <p>
+                Un estudio con 124 microempresas de este municipio fronterizo colombo-venezolano validó el modelo HERO mediante ecuaciones estructurales (PLS-SEM), incluso bajo condiciones adversas de economía informal y presión migratoria. El liderazgo saludable, el empoderamiento de los empleados y las prácticas organizacionales mantuvieron relaciones positivas con los resultados del negocio, incluida la satisfacción del cliente.
+              </p>
+              <div class="case-findings">
+                <span class="pill">Liderazgo saludable</span>
+                <span class="pill">Empoderamiento</span>
+                <span class="pill">Contexto adverso</span>
+                <span class="pill">Satisfacción del cliente</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -531,6 +634,7 @@
       <li>Salanova, M., Llorens, S., Cifre, E., &amp; Martínez, I. M. (2012). We need a hero! Toward a validation of the healthy &amp; resilient organization (HERO) model. <em>Group &amp; Organization Management, 37</em>(6), 785–822. https://doi.org/10.1177/1059601112470405</li>
       <li>Equipo WANT, Universitat Jaume I. (s. f.). <em>Modelo HERO.</em> https://www.want.uji.es/modelo-hero/</li>
       <li>Valero Romero, D. &amp; Barragán Hinestroza, L. (2023). <em>Aplicación del modelo HERO en Hellobrand</em> [Trabajo de grado, Politécnico Grancolombiano]. Repositorio Institucional.</li>
+      <li>Herrera León, L. M., &amp; Ordoñez Santos, M. L. (2025). Organizaciones saludables en frontera colombo-venezolana: validación del modelo HERO en microempresas de Villa del Rosario (Colombia). <em>Pensamiento &amp; Gestión</em>, (59). https://rcientificas.uninorte.edu.co/index.php/pensamiento/article/view/17817</li>
       <li>Donaldson, S. I., Chan, L. B., Villalobos, J., &amp; Chen, C. (2020). The generalizability of HERO across 15 nations. <em>International Journal of Environmental Research and Public Health, 17</em>(24), 9432.</li>
     </ul>
   </section>
@@ -592,6 +696,23 @@
       }
     });
   });
+
+  /* ---- 2b. Toggle: Ver ejemplos prácticos ---- */
+  var casesToggle = document.getElementById('casesToggle');
+  var casesWrap = document.getElementById('casesWrap');
+  if(casesToggle && casesWrap){
+    casesToggle.addEventListener('click', function(){
+      var open = casesWrap.classList.toggle('open');
+      casesToggle.classList.toggle('open', open);
+      casesToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      casesToggle.querySelector('.cases-toggle-txt').textContent = open ? 'Ocultar ejemplos prácticos' : 'Ver ejemplos prácticos';
+      if(open){
+        window.setTimeout(function(){
+          casesWrap.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest'});
+        }, 150);
+      }
+    });
+  }
 
   /* ---- 3. Scroll-triggered reveal for sections ---- */
   var observeEls = Array.prototype.slice.call(document.querySelectorAll('.observe'));
