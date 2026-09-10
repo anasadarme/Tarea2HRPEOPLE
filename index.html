@@ -7,10 +7,12 @@
     --ink:#152621;
     --ink-soft:#4A5C55;
     --line:#CBD6C9;
-    --accent:#1F6F5C;
-    --accent-strong:#134A3D;
-    --accent2:#C97A1A;
-    --accent2-soft:#F3E1C4;
+    --accent:#0E9F6E;
+    --accent-strong:#046C4E;
+    --accent2:#F2542D;
+    --accent2-soft:#FCE0D2;
+    --accent3:#7C3AED;
+    --accent3-soft:#EDE4FE;
     --chip:#E7EFE5;
     --shadow: 0 1px 2px rgba(21,38,33,.06), 0 8px 24px rgba(21,38,33,.06);
   }
@@ -21,10 +23,12 @@
       --ink:#EAF1EC;
       --ink-soft:#AEC2B9;
       --line:#2C433C;
-      --accent:#4FB393;
-      --accent-strong:#7ED2B4;
-      --accent2:#F0A83E;
-      --accent2-soft:#3A2C16;
+      --accent:#27D99C;
+      --accent-strong:#6FF0C4;
+      --accent2:#FF7A47;
+      --accent2-soft:#3D2115;
+      --accent3:#B08CFB;
+      --accent3-soft:#2C2350;
       --chip:#1C332C;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.35);
     }
@@ -35,10 +39,12 @@
     --ink:#EAF1EC;
     --ink-soft:#AEC2B9;
     --line:#2C433C;
-    --accent:#4FB393;
-    --accent-strong:#7ED2B4;
-    --accent2:#F0A83E;
-    --accent2-soft:#3A2C16;
+    --accent:#27D99C;
+    --accent-strong:#6FF0C4;
+    --accent2:#FF7A47;
+    --accent2-soft:#3D2115;
+    --accent3:#B08CFB;
+    --accent3-soft:#2C2350;
     --chip:#1C332C;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.35);
   }
@@ -148,11 +154,13 @@
   }
   .node-accent{color:var(--accent);}
   .node-accent2{color:var(--accent2);}
+  .node-accent3{color:var(--accent3);}
   .diagram-node{ cursor:pointer; }
   .diagram-node rect{ transition:fill .25s ease, transform .25s ease; transform-origin:center; transform-box:fill-box; pointer-events:all; }
   .diagram-node:hover rect, .diagram-node:focus-visible rect{ fill:var(--chip); transform:scale(1.015); }
   .diagram-node:focus-visible{ outline:none; }
   .diagram-node:focus-visible rect{ stroke-width:2.4; }
+  .diagram-node .hit-area{ fill:transparent; pointer-events:all; }
 
   .struct-list{
     display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px;
@@ -177,7 +185,7 @@
   }
   .struct-card:nth-child(1){--stripe:var(--accent);}
   .struct-card:nth-child(2){--stripe:var(--accent2);}
-  .struct-card:nth-child(3){--stripe:var(--accent-strong);}
+  .struct-card:nth-child(3){--stripe:var(--accent3);}
   .struct-card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
   .struct-card h3{font-size:1.05rem; font-weight:600; margin-bottom:4px;}
   .struct-card .tag{font-size:.78rem; color:var(--ink-soft); margin-bottom:12px; display:block;}
@@ -223,6 +231,10 @@
     font-family:"IBM Plex Mono", monospace; font-weight:600; font-size:1.7rem; color:var(--accent-strong);
     display:block;
   }
+  .stat:nth-child(1) .value{color:var(--accent);}
+  .stat:nth-child(2) .value{color:var(--accent2);}
+  .stat:nth-child(3) .value{color:var(--accent3);}
+  .stat:nth-child(4) .value{color:var(--accent-strong);}
   .stat .label{font-size:.78rem; color:var(--ink-soft); margin-top:6px; display:block;}
 
   .path-figure{margin-top:28px;}
@@ -248,8 +260,12 @@
   }
   .pill{
     background:var(--chip); color:var(--ink); border-radius:999px; padding:5px 12px;
-    font-size:.78rem; font-weight:500;
+    font-size:.78rem; font-weight:600;
   }
+  .pill:nth-child(1){ background:var(--chip); color:var(--accent-strong); }
+  .pill:nth-child(2){ background:var(--accent2-soft); color:var(--accent2); }
+  .pill:nth-child(3){ background:var(--accent3-soft); color:var(--accent3); }
+  .pill:nth-child(4){ background:var(--chip); color:var(--accent); }
 
   /* ---------- REFS ---------- */
   .refs{font-size:.86rem; color:var(--ink-soft);}
@@ -328,6 +344,7 @@
           <text x="125" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
           <text x="125" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">tarea · interpersonal ·</text>
           <text x="125" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">organización</text>
+          <rect class="hit-area" x="30" y="90" width="190" height="120" rx="10"/>
           </g>
 
           <!-- node 2 -->
@@ -337,16 +354,18 @@
           <text x="380" y="147" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">equipos saludables</text>
           <text x="380" y="171" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">engagement · eficacia ·</text>
           <text x="380" y="186" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">resiliencia · capital psic.</text>
+          <rect class="hit-area" x="285" y="90" width="190" height="120" rx="10"/>
           </g>
 
           <!-- node 3 -->
           <g class="diagram-node" data-key="resultados" tabindex="0" role="button" aria-label="Ver detalle de Resultados organizacionales saludables">
-          <rect x="540" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <rect x="540" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" class="node-accent3"/>
           <text x="635" y="122" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Resultados</text>
           <text x="635" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">organizacionales</text>
           <text x="635" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
           <text x="635" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">desempeño · lealtad ·</text>
           <text x="635" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">satisfacción cliente</text>
+          <rect class="hit-area" x="540" y="90" width="190" height="120" rx="10"/>
           </g>
 
           <!-- forward arrows -->
@@ -460,10 +479,10 @@
 
           <line x1="640" y1="40" x2="700" y2="75" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
           <text x="705" y="80" fill="currentColor">Lealtad</text>
-          <text x="705" y="94" text-anchor="start" fill="currentColor" class="node-accent" font-weight="600">β=.61</text>
+          <text x="705" y="94" text-anchor="start" fill="currentColor" class="node-accent3" font-weight="600">β=.61</text>
 
           <line x1="600" y1="40" x2="600" y2="75" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
-          <text x="565" y="94" fill="currentColor">Satisfacción β=.50</text>
+          <text x="565" y="94" fill="currentColor" class="node-accent2" font-weight="600">Satisfacción β=.50</text>
         </g>
       </svg>
       <figcaption>Coeficientes estandarizados del modelo estructural (SEM) del Estudio 2 — Salanova et al. (2012).</figcaption>
@@ -504,7 +523,7 @@
   </section>
 
   <footer>
-    <span>Elaborado por: <span class="fill-in">[tu nombre]</span> — Maestría, UNAD</span>
+    <span>Elaborado por: <span class="fill-in">Ana Adarme</span> — Maestría, UNAD</span>
     <span>Gestión de la Felicidad (103098218) · Tarea 2</span>
   </footer>
 
