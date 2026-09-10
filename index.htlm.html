@@ -1,0 +1,412 @@
+<title>Modelo HERO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper:#F1F5F0;
+    --surface:#FFFFFF;
+    --ink:#152621;
+    --ink-soft:#4A5C55;
+    --line:#CBD6C9;
+    --accent:#1F6F5C;
+    --accent-strong:#134A3D;
+    --accent2:#C97A1A;
+    --accent2-soft:#F3E1C4;
+    --chip:#E7EFE5;
+    --shadow: 0 1px 2px rgba(21,38,33,.06), 0 8px 24px rgba(21,38,33,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1E1A;
+      --surface:#152925;
+      --ink:#EAF1EC;
+      --ink-soft:#AEC2B9;
+      --line:#2C433C;
+      --accent:#4FB393;
+      --accent-strong:#7ED2B4;
+      --accent2:#F0A83E;
+      --accent2-soft:#3A2C16;
+      --chip:#1C332C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1E1A;
+    --surface:#152925;
+    --ink:#EAF1EC;
+    --ink-soft:#AEC2B9;
+    --line:#2C433C;
+    --accent:#4FB393;
+    --accent-strong:#7ED2B4;
+    --accent2:#F0A83E;
+    --accent2-soft:#3A2C16;
+    --chip:#1C332C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Work Sans", system-ui, sans-serif;
+    padding-inline:20px;
+    padding-block:0 64px;
+    line-height:1.55;
+  }
+  .wrap{max-width:860px; margin-inline:auto;}
+
+  h1,h2,h3{font-family:"Fraunces", Georgia, serif; text-wrap:balance; color:var(--ink); margin:0;}
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  a{color:var(--accent-strong);}
+  .mono{font-family:"IBM Plex Mono", monospace;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* ---------- MASTHEAD ---------- */
+  header.masthead{
+    padding-block:44px 32px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:40px;
+  }
+  .course-tag{
+    display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;
+    margin-bottom:26px;
+  }
+  .acronym-def{
+    font-family:"Fraunces", serif; font-weight:500; font-size:clamp(1.5rem, 4vw, 2.1rem);
+    line-height:1.25; color:var(--ink-soft); max-width:640px;
+  }
+  .acronym-def b{
+    color:var(--accent-strong); font-weight:700; font-variant-caps:normal;
+  }
+  h1.title{
+    font-size:clamp(3.2rem, 11vw, 5.6rem);
+    font-weight:700; letter-spacing:-.02em; line-height:.92;
+    margin-top:14px;
+  }
+  .subtitle{
+    font-size:1.05rem; color:var(--ink-soft); max-width:520px; margin-top:14px;
+  }
+  .citation-line{
+    margin-top:22px; font-size:.85rem; color:var(--ink-soft);
+    border-left:2px solid var(--accent2); padding-left:12px;
+  }
+
+  section{margin-bottom:56px;}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:20px;}
+  .section-head .idx{font-family:"IBM Plex Mono",monospace; color:var(--accent2); font-size:.85rem; font-weight:600;}
+  h2.section-title{font-size:clamp(1.5rem,4vw,2rem); font-weight:600;}
+  p.lede{max-width:64ch; color:var(--ink-soft);}
+
+  /* ---------- INTRO ---------- */
+  .intro-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap:32px;
+  }
+  @media (max-width:620px){ .intro-grid{grid-template-columns:1fr;} }
+  .intro-grid p{max-width:60ch;}
+  .fact-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .fact-card .eyebrow{margin-bottom:8px; display:block;}
+  .fact-card .big{
+    font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; color:var(--accent-strong);
+  }
+  .fact-card .small{font-size:.85rem; color:var(--ink-soft); margin-top:4px;}
+
+  /* ---------- DIAGRAM ---------- */
+  figure.diagram{margin:0;}
+  figure.diagram svg{width:100%; height:auto; display:block; color:var(--ink);}
+  figcaption{
+    margin-top:14px; font-size:.85rem; color:var(--ink-soft); max-width:60ch;
+  }
+  .node-accent{color:var(--accent);}
+  .node-accent2{color:var(--accent2);}
+
+  .struct-list{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px;
+  }
+  @media (max-width:720px){ .struct-list{grid-template-columns:1fr;} }
+  .struct-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:20px 20px 22px; box-shadow:var(--shadow);
+    border-top:4px solid var(--stripe, var(--accent));
+  }
+  .struct-card:nth-child(1){--stripe:var(--accent);}
+  .struct-card:nth-child(2){--stripe:var(--accent2);}
+  .struct-card:nth-child(3){--stripe:var(--accent-strong);}
+  .struct-card h3{font-size:1.05rem; font-weight:600; margin-bottom:4px;}
+  .struct-card .tag{font-size:.78rem; color:var(--ink-soft); margin-bottom:12px; display:block;}
+  .struct-card ul{margin:0; padding-left:18px; font-size:.92rem; color:var(--ink-soft);}
+  .struct-card li{margin-bottom:6px;}
+  .struct-card li b{color:var(--ink); font-weight:600;}
+
+  /* ---------- STATS ---------- */
+  .stat-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  @media (max-width:720px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+  .stat{
+    background:var(--surface); padding:20px 16px; text-align:left;
+  }
+  .stat .value{
+    font-family:"IBM Plex Mono", monospace; font-weight:600; font-size:1.7rem; color:var(--accent-strong);
+    display:block;
+  }
+  .stat .label{font-size:.78rem; color:var(--ink-soft); margin-top:6px; display:block;}
+
+  .path-figure{margin-top:28px;}
+
+  /* ---------- CASE ---------- */
+  .case-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:28px 28px 26px; box-shadow:var(--shadow);
+    display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start;
+  }
+  @media (max-width:560px){ .case-card{grid-template-columns:1fr;} }
+  .case-mark{
+    width:52px; height:52px; border-radius:50%; background:var(--accent2-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Fraunces",serif; font-weight:700; color:var(--accent2); font-size:1.3rem;
+  }
+  .case-card h3{font-size:1.2rem; font-weight:600; margin-bottom:6px;}
+  .case-meta{font-size:.8rem; color:var(--ink-soft); margin-bottom:12px; font-family:"IBM Plex Mono",monospace;}
+  .case-findings{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;
+  }
+  .pill{
+    background:var(--chip); color:var(--ink); border-radius:999px; padding:5px 12px;
+    font-size:.78rem; font-weight:500;
+  }
+
+  /* ---------- REFS ---------- */
+  .refs{font-size:.86rem; color:var(--ink-soft);}
+  .refs li{margin-bottom:14px; padding-left:0;}
+  .refs{list-style:none; padding:0;}
+  .refs li{border-left:2px solid var(--line); padding-left:14px;}
+
+  footer{
+    margin-top:64px; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:.8rem; color:var(--ink-soft);
+  }
+  .fill-in{
+    border-bottom:1px dashed var(--ink-soft); padding:2px 4px; color:var(--ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .flow-arrow{ stroke-dasharray: 6 5; animation: dash 2.4s linear infinite; }
+    @keyframes dash{ to{ stroke-dashoffset:-22; } }
+    .reveal{ animation: rise .6s ease-out both; }
+    .reveal.d1{animation-delay:.05s;} .reveal.d2{animation-delay:.15s;} .reveal.d3{animation-delay:.25s;}
+    @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="course-tag">
+      <span class="eyebrow">Gestión de la Felicidad · UNAD · Tarea 2</span>
+      <span class="eyebrow">Trabajo individual</span>
+    </div>
+    <p class="acronym-def"><b>HE</b>althy and <b>R</b>esilient <b>O</b>rganizations</p>
+    <h1 class="title reveal d1">HERO</h1>
+    <p class="subtitle reveal d2">Modelo de organizaciones saludables y resilientes: cómo los recursos de una empresa construyen empleados sanos, y estos, resultados organizacionales sostenibles.</p>
+    <p class="citation-line reveal d3">Salanova, M., Llorens, S., Cifre, E., &amp; Martínez, I. M. (2012). <em>We need a hero! Toward a validation of the healthy &amp; resilient organization (HERO) model.</em> Group &amp; Organization Management, 37(6), 785–822. — Equipo WANT, Universitat Jaume I.</p>
+  </header>
+
+  <!-- ============ 1. QUÉ ES ============ -->
+  <section>
+    <div class="section-head"><span class="idx">01</span><h2 class="section-title">¿Qué es el modelo HERO?</h2></div>
+    <div class="intro-grid">
+      <p class="lede">
+        Una organización saludable no es la que evita el malestar, sino la que <strong>invierte de forma sistemática y deliberada</strong> en recursos y prácticas que permiten a sus empleados desarrollarse física, psicológica y socialmente. El modelo HERO propone que esta salud organizacional se construye en cadena: los recursos disponibles generan empleados y equipos saludables, y estos —a su vez— producen resultados organizacionales saludables, que retroalimentan nuevos recursos. Es, en palabras de sus autoras, una <strong>espiral positiva</strong> antes que un estado fijo.
+      </p>
+      <div class="fact-card">
+        <span class="eyebrow">Origen</span>
+        <span class="big">2012</span>
+        <p class="small">Publicado por el equipo WANT (Universitat Jaume I, España), dentro de la Psicología Organizacional Positiva. Validado en <strong>57 empresas</strong> y más de <strong>2.194 empleados</strong> en dos estudios independientes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. ESTRUCTURA ============ -->
+  <section>
+    <div class="section-head"><span class="idx">02</span><h2 class="section-title">Estructura del modelo</h2></div>
+    <p class="lede">Tres bloques conectados en un ciclo continuo — cada uno alimenta al siguiente, y los resultados retroalimentan a los recursos.</p>
+
+    <figure class="diagram" style="margin-top:28px;">
+      <svg viewBox="0 0 760 300" role="img" aria-label="Diagrama circular con tres bloques: Recursos y prácticas organizacionales saludables, que alimenta a Empleados y equipos saludables, que alimenta a Resultados organizacionales saludables, que retroalimenta de vuelta a Recursos.">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <!-- nodes -->
+        <g font-family="Work Sans, sans-serif">
+          <!-- node 1 -->
+          <rect x="30" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" class="node-accent"/>
+          <text x="125" y="122" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Recursos y prácticas</text>
+          <text x="125" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">organizacionales</text>
+          <text x="125" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
+          <text x="125" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">tarea · interpersonal ·</text>
+          <text x="125" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">organización</text>
+
+          <!-- node 2 -->
+          <rect x="285" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" class="node-accent2"/>
+          <text x="380" y="130" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Empleados y</text>
+          <text x="380" y="147" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">equipos saludables</text>
+          <text x="380" y="171" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">engagement · eficacia ·</text>
+          <text x="380" y="186" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">resiliencia · capital psic.</text>
+
+          <!-- node 3 -->
+          <rect x="540" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="635" y="122" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Resultados</text>
+          <text x="635" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">organizacionales</text>
+          <text x="635" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
+          <text x="635" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">desempeño · lealtad ·</text>
+          <text x="635" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">satisfacción cliente</text>
+
+          <!-- forward arrows -->
+          <line x1="220" y1="150" x2="281" y2="150" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" class="flow-arrow"/>
+          <line x1="475" y1="150" x2="536" y2="150" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" class="flow-arrow"/>
+
+          <!-- feedback loop -->
+          <path d="M635,212 C635,270 125,270 125,214" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 5" marker-end="url(#arrow)" opacity=".65"/>
+          <text x="380" y="266" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".65">retroalimenta nuevos recursos</text>
+        </g>
+      </svg>
+      <figcaption>Los recursos organizacionales predicen empleados saludables, que median el efecto sobre el desempeño de equipo y, con ello, la lealtad y satisfacción del cliente — un ciclo que la literatura llama "espiral positiva".</figcaption>
+    </figure>
+
+    <div class="struct-list">
+      <div class="struct-card">
+        <h3>1. Recursos y prácticas</h3>
+        <span class="tag">Lo que la organización pone a disposición</span>
+        <ul>
+          <li><b>Nivel de tarea:</b> autonomía, feedback, claridad de rol</li>
+          <li><b>Nivel interpersonal:</b> liderazgo transformacional, clima de equipo, apoyo social</li>
+          <li><b>Nivel organizacional:</b> conciliación vida-trabajo, desarrollo de carrera, comunicación abierta, salario emocional</li>
+        </ul>
+      </div>
+      <div class="struct-card">
+        <h3>2. Empleados y equipos saludables</h3>
+        <span class="tag">Lo que las personas desarrollan</span>
+        <ul>
+          <li><b>Engagement:</b> vigor, dedicación, absorción</li>
+          <li><b>Capital psicológico:</b> esperanza, optimismo, autoeficacia</li>
+          <li>Resiliencia y competencia emocional</li>
+          <li>Confianza vertical y horizontal en el equipo</li>
+        </ul>
+      </div>
+      <div class="struct-card">
+        <h3>3. Resultados saludables</h3>
+        <span class="tag">Lo que la organización obtiene</span>
+        <ul>
+          <li>Desempeño intra- y extra-rol</li>
+          <li>Compromiso organizacional</li>
+          <li>Lealtad y satisfacción del cliente</li>
+          <li>Responsabilidad social y excelencia del servicio</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. APLICACIÓN Y EFECTIVIDAD ============ -->
+  <section>
+    <div class="section-head"><span class="idx">03</span><h2 class="section-title">Aplicación y efectividad</h2></div>
+    <p class="lede">El modelo no quedó en teoría: fue puesto a prueba estadísticamente en dos estudios de campo, y hoy se aplica mediante la herramienta diagnóstica <strong>HEROCheck</strong>.</p>
+
+    <div class="stat-row" style="margin-top:24px;">
+      <div class="stat">
+        <span class="value num">14</span>
+        <span class="label">PYMEs · Estudio 1 (710 empleados, 84 unidades)</span>
+      </div>
+      <div class="stat">
+        <span class="value num">43</span>
+        <span class="label">empresas · Estudio 2 (1.484 empleados, 2.098 clientes)</span>
+      </div>
+      <div class="stat">
+        <span class="value num">289+</span>
+        <span class="label">organizaciones evaluadas con HEROCheck</span>
+      </div>
+      <div class="stat">
+        <span class="value num">β = .72</span>
+        <span class="label">recursos → empleados saludables</span>
+      </div>
+    </div>
+
+    <figure class="diagram path-figure">
+      <svg viewBox="0 0 760 110" role="img" aria-label="Diagrama de coeficientes: recursos predicen empleados saludables con beta .72, que median el efecto sobre desempeño de equipo, el cual predice lealtad del cliente con beta .61 y satisfacción del cliente con beta .50.">
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Mono, monospace" font-size="11">
+          <text x="30" y="30" fill="currentColor">Recursos</text>
+          <line x1="95" y1="26" x2="255" y2="26" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
+          <text x="175" y="18" text-anchor="middle" fill="currentColor" class="node-accent" font-weight="600">β=.72</text>
+
+          <text x="265" y="30" fill="currentColor">Empleados saludables</text>
+          <line x1="430" y1="26" x2="560" y2="26" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
+          <text x="495" y="18" text-anchor="middle" fill="currentColor" class="node-accent2" font-weight="600">media</text>
+
+          <text x="565" y="30" fill="currentColor">Desempeño de equipo</text>
+
+          <line x1="640" y1="40" x2="700" y2="75" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
+          <text x="705" y="80" fill="currentColor">Lealtad</text>
+          <text x="705" y="94" text-anchor="start" fill="currentColor" class="node-accent" font-weight="600">β=.61</text>
+
+          <line x1="600" y1="40" x2="600" y2="75" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/>
+          <text x="565" y="94" fill="currentColor">Satisfacción β=.50</text>
+        </g>
+      </svg>
+      <figcaption>Coeficientes estandarizados del modelo estructural (SEM) del Estudio 2 — Salanova et al. (2012).</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 4. EJEMPLO PRÁCTICO ============ -->
+  <section>
+    <div class="section-head"><span class="idx">04</span><h2 class="section-title">Ejemplo práctico en un entorno organizacional</h2></div>
+
+    <div class="case-card">
+      <div class="case-mark">HB</div>
+      <div>
+        <h3>Hellobrand — empresa tecnológica, Bogotá (Colombia)</h3>
+        <div class="case-meta">Valero Romero &amp; Barragán Hinestroza (2023) · Politécnico Grancolombiano</div>
+        <p>
+          Un estudio de caso aplicó las tres dimensiones del modelo HERO a esta empresa tecnológica bogotana, evaluando recursos disponibles, demandas laborales, estado de los empleados y resultados. La organización mostró alta autonomía, liderazgo percibido positivamente y bajo nivel de burnout entre los colaboradores evaluados, calificando como una organización saludable según los criterios del modelo.
+        </p>
+        <div class="case-findings">
+          <span class="pill">Alta autonomía</span>
+          <span class="pill">Liderazgo positivo</span>
+          <span class="pill">Bajo burnout</span>
+          <span class="pill">Organización saludable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCIAS ============ -->
+  <section style="margin-bottom:0;">
+    <div class="section-head"><span class="idx">05</span><h2 class="section-title">Referencias (APA 7)</h2></div>
+    <ul class="refs">
+      <li>Salanova, M., Llorens, S., Cifre, E., &amp; Martínez, I. M. (2012). We need a hero! Toward a validation of the healthy &amp; resilient organization (HERO) model. <em>Group &amp; Organization Management, 37</em>(6), 785–822. https://doi.org/10.1177/1059601112470405</li>
+      <li>Equipo WANT, Universitat Jaume I. (s. f.). <em>Modelo HERO.</em> https://www.want.uji.es/modelo-hero/</li>
+      <li>Valero Romero, D. &amp; Barragán Hinestroza, L. (2023). <em>Aplicación del modelo HERO en Hellobrand</em> [Trabajo de grado, Politécnico Grancolombiano]. Repositorio Institucional.</li>
+      <li>Donaldson, S. I., Chan, L. B., Villalobos, J., &amp; Chen, C. (2020). The generalizability of HERO across 15 nations. <em>International Journal of Environmental Research and Public Health, 17</em>(24), 9432.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Elaborado por: <span class="fill-in">[tu nombre]</span> — Maestría, UNAD</span>
+    <span>Gestión de la Felicidad (103098218) · Tarea 2</span>
+  </footer>
+
+</div>
