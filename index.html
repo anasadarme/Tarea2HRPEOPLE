@@ -54,6 +54,28 @@
   }
   .wrap{max-width:860px; margin-inline:auto;}
 
+  /* ---------- SCROLL PROGRESS ---------- */
+  .progress-track{
+    position:fixed; top:0; left:0; width:100%; height:3px;
+    background:transparent; z-index:50;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:var(--accent);
+    transition:width .1s linear;
+  }
+
+  /* ---------- SCROLL REVEAL (sections) ---------- */
+  .observe{
+    opacity:1; transform:none;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .observe{
+      opacity:0; transform:translateY(18px);
+      transition:opacity .55s ease, transform .55s ease;
+    }
+    .observe.in-view{ opacity:1; transform:none; }
+  }
+
   h1,h2,h3{font-family:"Fraunces", Georgia, serif; text-wrap:balance; color:var(--ink); margin:0;}
   .eyebrow{
     font-family:"IBM Plex Mono", monospace;
@@ -109,7 +131,9 @@
   .fact-card{
     background:var(--surface); border:1px solid var(--line); border-radius:10px;
     padding:18px 20px; box-shadow:var(--shadow);
+    transition:transform .25s ease;
   }
+  .fact-card:hover{ transform:translateY(-3px); }
   .fact-card .eyebrow{margin-bottom:8px; display:block;}
   .fact-card .big{
     font-family:"Fraunces",serif; font-weight:600; font-size:1.6rem; color:var(--accent-strong);
@@ -124,6 +148,11 @@
   }
   .node-accent{color:var(--accent);}
   .node-accent2{color:var(--accent2);}
+  .diagram-node{ cursor:pointer; }
+  .diagram-node rect{ transition:fill .25s ease, transform .25s ease; transform-origin:center; transform-box:fill-box; pointer-events:all; }
+  .diagram-node:hover rect, .diagram-node:focus-visible rect{ fill:var(--chip); transform:scale(1.015); }
+  .diagram-node:focus-visible{ outline:none; }
+  .diagram-node:focus-visible rect{ stroke-width:2.4; }
 
   .struct-list{
     display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px;
@@ -133,15 +162,51 @@
     background:var(--surface); border:1px solid var(--line); border-radius:12px;
     padding:20px 20px 22px; box-shadow:var(--shadow);
     border-top:4px solid var(--stripe, var(--accent));
+    cursor:pointer; user-select:none;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    outline:none;
+  }
+  .struct-card:hover{ transform:translateY(-4px); box-shadow:0 4px 10px rgba(21,38,33,.08), 0 16px 34px rgba(21,38,33,.1); }
+  .struct-card:focus-visible{ border-color:var(--accent); box-shadow:0 0 0 3px var(--chip), var(--shadow); }
+  .struct-card.pulse{ animation:pulse-ring .6s ease; }
+  @media (prefers-reduced-motion: no-preference){
+    @keyframes pulse-ring{
+      0%{ box-shadow:0 0 0 0 var(--accent2-soft); }
+      100%{ box-shadow:0 0 0 14px rgba(0,0,0,0); }
+    }
   }
   .struct-card:nth-child(1){--stripe:var(--accent);}
   .struct-card:nth-child(2){--stripe:var(--accent2);}
   .struct-card:nth-child(3){--stripe:var(--accent-strong);}
+  .struct-card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
   .struct-card h3{font-size:1.05rem; font-weight:600; margin-bottom:4px;}
   .struct-card .tag{font-size:.78rem; color:var(--ink-soft); margin-bottom:12px; display:block;}
   .struct-card ul{margin:0; padding-left:18px; font-size:.92rem; color:var(--ink-soft);}
   .struct-card li{margin-bottom:6px;}
   .struct-card li b{color:var(--ink); font-weight:600;}
+  .struct-toggle{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    background:var(--chip); display:flex; align-items:center; justify-content:center;
+    margin-top:2px;
+  }
+  .struct-toggle svg{width:12px; height:12px; color:var(--ink-soft); transition:transform .3s ease;}
+  .struct-card.open .struct-toggle svg{ transform:rotate(180deg); color:var(--accent-strong); }
+  .struct-hint{
+    font-size:.74rem; color:var(--accent-strong); margin-top:14px; font-family:"IBM Plex Mono",monospace;
+    display:flex; align-items:center; gap:6px;
+  }
+  .struct-card.open .struct-hint .hint-txt::before{ content:"Ver menos"; }
+  .struct-hint .hint-txt::before{ content:"Ver más"; }
+  .struct-detail{
+    display:grid; grid-template-rows:0fr; opacity:0;
+    transition:grid-template-rows .4s ease, opacity .3s ease, margin-top .4s ease;
+  }
+  .struct-card.open .struct-detail{ grid-template-rows:1fr; opacity:1; margin-top:14px; }
+  .struct-detail > div{ overflow:hidden; }
+  .struct-detail p{
+    font-size:.88rem; color:var(--ink-soft); margin:0; padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
 
   /* ---------- STATS ---------- */
   .stat-row{
@@ -151,7 +216,9 @@
   @media (max-width:720px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
   .stat{
     background:var(--surface); padding:20px 16px; text-align:left;
+    transition:background .25s ease;
   }
+  .stat:hover{ background:var(--chip); }
   .stat .value{
     font-family:"IBM Plex Mono", monospace; font-weight:600; font-size:1.7rem; color:var(--accent-strong);
     display:block;
@@ -165,7 +232,9 @@
     background:var(--surface); border:1px solid var(--line); border-radius:14px;
     padding:28px 28px 26px; box-shadow:var(--shadow);
     display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start;
+    transition:transform .25s ease;
   }
+  .case-card:hover{ transform:translateY(-3px); }
   @media (max-width:560px){ .case-card{grid-template-columns:1fr;} }
   .case-mark{
     width:52px; height:52px; border-radius:50%; background:var(--accent2-soft);
@@ -206,6 +275,8 @@
   }
 </style>
 
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
 <div class="wrap">
 
   <header class="masthead">
@@ -220,7 +291,7 @@
   </header>
 
   <!-- ============ 1. QUÉ ES ============ -->
-  <section>
+  <section class="observe">
     <div class="section-head"><span class="idx">01</span><h2 class="section-title">¿Qué es el modelo HERO?</h2></div>
     <div class="intro-grid">
       <p class="lede">
@@ -235,7 +306,7 @@
   </section>
 
   <!-- ============ 2. ESTRUCTURA ============ -->
-  <section>
+  <section class="observe">
     <div class="section-head"><span class="idx">02</span><h2 class="section-title">Estructura del modelo</h2></div>
     <p class="lede">Tres bloques conectados en un ciclo continuo — cada uno alimenta al siguiente, y los resultados retroalimentan a los recursos.</p>
 
@@ -250,27 +321,33 @@
         <!-- nodes -->
         <g font-family="Work Sans, sans-serif">
           <!-- node 1 -->
+          <g class="diagram-node" data-key="recursos" tabindex="0" role="button" aria-label="Ver detalle de Recursos y prácticas organizacionales saludables">
           <rect x="30" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" class="node-accent"/>
           <text x="125" y="122" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Recursos y prácticas</text>
           <text x="125" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">organizacionales</text>
           <text x="125" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
           <text x="125" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">tarea · interpersonal ·</text>
           <text x="125" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">organización</text>
+          </g>
 
           <!-- node 2 -->
+          <g class="diagram-node" data-key="empleados" tabindex="0" role="button" aria-label="Ver detalle de Empleados y equipos saludables">
           <rect x="285" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6" class="node-accent2"/>
           <text x="380" y="130" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Empleados y</text>
           <text x="380" y="147" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">equipos saludables</text>
           <text x="380" y="171" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">engagement · eficacia ·</text>
           <text x="380" y="186" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">resiliencia · capital psic.</text>
+          </g>
 
           <!-- node 3 -->
+          <g class="diagram-node" data-key="resultados" tabindex="0" role="button" aria-label="Ver detalle de Resultados organizacionales saludables">
           <rect x="540" y="90" width="190" height="120" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
           <text x="635" y="122" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">Resultados</text>
           <text x="635" y="139" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">organizacionales</text>
           <text x="635" y="156" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">saludables</text>
           <text x="635" y="180" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">desempeño · lealtad ·</text>
           <text x="635" y="195" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".7">satisfacción cliente</text>
+          </g>
 
           <!-- forward arrows -->
           <line x1="220" y1="150" x2="281" y2="150" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" class="flow-arrow"/>
@@ -284,41 +361,63 @@
       <figcaption>Los recursos organizacionales predicen empleados saludables, que median el efecto sobre el desempeño de equipo y, con ello, la lealtad y satisfacción del cliente — un ciclo que la literatura llama "espiral positiva".</figcaption>
     </figure>
 
+    <p class="struct-list-hint" style="font-size:.8rem; color:var(--ink-soft); margin:-8px 0 18px; font-family:'IBM Plex Mono',monospace;">↳ toca una tarjeta o un bloque del diagrama para ver el detalle</p>
     <div class="struct-list">
-      <div class="struct-card">
-        <h3>1. Recursos y prácticas</h3>
-        <span class="tag">Lo que la organización pone a disposición</span>
+      <div class="struct-card" data-key="recursos" tabindex="0" role="button" aria-expanded="false">
+        <div class="struct-card-top">
+          <div>
+            <h3>1. Recursos y prácticas</h3>
+            <span class="tag">Lo que la organización pone a disposición</span>
+          </div>
+          <span class="struct-toggle"><svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
         <ul>
           <li><b>Nivel de tarea:</b> autonomía, feedback, claridad de rol</li>
           <li><b>Nivel interpersonal:</b> liderazgo transformacional, clima de equipo, apoyo social</li>
           <li><b>Nivel organizacional:</b> conciliación vida-trabajo, desarrollo de carrera, comunicación abierta, salario emocional</li>
         </ul>
+        <div class="struct-detail"><div><p>Estos recursos actúan como amortiguadores frente a las demandas laborales (marco JD-R, Job Demands-Resources) y son la variable predictora del modelo: en el Estudio 2 explican el <b>β = .72</b> hacia empleados saludables. Ejemplos concretos en una organización: horarios flexibles o teletrabajo, programas de reconocimiento entre pares, retroalimentación 360°, mentoring para planes de carrera y políticas explícitas de desconexión laboral.</p></div></div>
+        <span class="struct-hint"><span class="hint-txt"></span></span>
       </div>
-      <div class="struct-card">
-        <h3>2. Empleados y equipos saludables</h3>
-        <span class="tag">Lo que las personas desarrollan</span>
+      <div class="struct-card" data-key="empleados" tabindex="0" role="button" aria-expanded="false">
+        <div class="struct-card-top">
+          <div>
+            <h3>2. Empleados y equipos saludables</h3>
+            <span class="tag">Lo que las personas desarrollan</span>
+          </div>
+          <span class="struct-toggle"><svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
         <ul>
           <li><b>Engagement:</b> vigor, dedicación, absorción</li>
           <li><b>Capital psicológico:</b> esperanza, optimismo, autoeficacia</li>
           <li>Resiliencia y competencia emocional</li>
           <li>Confianza vertical y horizontal en el equipo</li>
         </ul>
+        <div class="struct-detail"><div><p>El engagement se mide con la Utrecht Work Engagement Scale (UWES) en sus tres dimensiones. El capital psicológico (PsyCap) reúne esperanza, autoeficacia, resiliencia y optimismo: recursos personales que sostienen el desempeño incluso ante demandas altas. Los equipos "HERO" muestran menor intención de rotación y mayor disposición a un desempeño extra-rol.</p></div></div>
+        <span class="struct-hint"><span class="hint-txt"></span></span>
       </div>
-      <div class="struct-card">
-        <h3>3. Resultados saludables</h3>
-        <span class="tag">Lo que la organización obtiene</span>
+      <div class="struct-card" data-key="resultados" tabindex="0" role="button" aria-expanded="false">
+        <div class="struct-card-top">
+          <div>
+            <h3>3. Resultados saludables</h3>
+            <span class="tag">Lo que la organización obtiene</span>
+          </div>
+          <span class="struct-toggle"><svg viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
         <ul>
           <li>Desempeño intra- y extra-rol</li>
           <li>Compromiso organizacional</li>
           <li>Lealtad y satisfacción del cliente</li>
           <li>Responsabilidad social y excelencia del servicio</li>
         </ul>
+        <div class="struct-detail"><div><p>Se dividen en desempeño intra-organizacional (calidad, productividad, ausentismo) y extra-organizacional (lealtad, satisfacción del cliente, reputación). En el Estudio 2, el desempeño de equipo predijo la lealtad del cliente (<b>β = .61</b>) y su satisfacción (<b>β = .50</b>): la salud interna se traduce en resultados visibles hacia afuera.</p></div></div>
+        <span class="struct-hint"><span class="hint-txt"></span></span>
       </div>
     </div>
   </section>
 
   <!-- ============ 3. APLICACIÓN Y EFECTIVIDAD ============ -->
-  <section>
+  <section class="observe">
     <div class="section-head"><span class="idx">03</span><h2 class="section-title">Aplicación y efectividad</h2></div>
     <p class="lede">El modelo no quedó en teoría: fue puesto a prueba estadísticamente en dos estudios de campo, y hoy se aplica mediante la herramienta diagnóstica <strong>HEROCheck</strong>.</p>
 
@@ -372,7 +471,7 @@
   </section>
 
   <!-- ============ 4. EJEMPLO PRÁCTICO ============ -->
-  <section>
+  <section class="observe">
     <div class="section-head"><span class="idx">04</span><h2 class="section-title">Ejemplo práctico en un entorno organizacional</h2></div>
 
     <div class="case-card">
@@ -394,7 +493,7 @@
   </section>
 
   <!-- ============ REFERENCIAS ============ -->
-  <section style="margin-bottom:0;">
+  <section class="observe" style="margin-bottom:0;">
     <div class="section-head"><span class="idx">05</span><h2 class="section-title">Referencias (APA 7)</h2></div>
     <ul class="refs">
       <li>Salanova, M., Llorens, S., Cifre, E., &amp; Martínez, I. M. (2012). We need a hero! Toward a validation of the healthy &amp; resilient organization (HERO) model. <em>Group &amp; Organization Management, 37</em>(6), 785–822. https://doi.org/10.1177/1059601112470405</li>
@@ -410,3 +509,90 @@
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- 1. Click-to-expand struct cards ---- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.struct-card'));
+
+  function setOpen(card, open){
+    card.classList.toggle('open', open);
+    card.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function toggleCard(card){
+    setOpen(card, !card.classList.contains('open'));
+  }
+
+  cards.forEach(function(card){
+    card.addEventListener('click', function(){ toggleCard(card); });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggleCard(card);
+      }
+    });
+  });
+
+  /* ---- 2. SVG diagram nodes open + scroll to their matching card ---- */
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.diagram-node'));
+
+  function activateFromNode(key){
+    var card = document.querySelector('.struct-card[data-key="' + key + '"]');
+    if(!card) return;
+    setOpen(card, true);
+    card.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'center'});
+    card.classList.remove('pulse');
+    // force reflow so the animation can restart if clicked again
+    void card.offsetWidth;
+    card.classList.add('pulse');
+    window.setTimeout(function(){ card.classList.remove('pulse'); }, 700);
+  }
+
+  nodes.forEach(function(node){
+    node.addEventListener('click', function(){ activateFromNode(node.getAttribute('data-key')); });
+    node.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        activateFromNode(node.getAttribute('data-key'));
+      }
+    });
+  });
+
+  /* ---- 3. Scroll-triggered reveal for sections ---- */
+  var observeEls = Array.prototype.slice.call(document.querySelectorAll('.observe'));
+  if('IntersectionObserver' in window && !reduceMotion){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    observeEls.forEach(function(el){ io.observe(el); });
+  } else {
+    observeEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  /* ---- 4. Scroll progress bar ---- */
+  var fill = document.getElementById('progressFill');
+  var ticking = false;
+  function updateProgress(){
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if(fill) fill.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  });
+  updateProgress();
+})();
+</script>
