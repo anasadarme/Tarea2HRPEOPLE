@@ -51,14 +51,21 @@
 
   *{box-sizing:border-box;}
   body{
-    background:var(--paper);
+    background:var(--accent2);
     color:var(--ink);
     font-family:"Work Sans", system-ui, sans-serif;
-    padding-inline:20px;
-    padding-block:0 64px;
+    padding-inline:16px;
+    padding-block:16px 32px;
     line-height:1.55;
   }
-  .wrap{max-width:860px; margin-inline:auto;}
+  .wrap{
+    max-width:860px; margin-inline:auto;
+    background:var(--paper);
+    border-radius:18px;
+    padding:0 28px 40px;
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+  }
+  @media (max-width:560px){ .wrap{padding:0 18px 32px;} }
 
   /* ---------- SCROLL PROGRESS ---------- */
   .progress-track{
@@ -121,6 +128,11 @@
     margin-top:22px; font-size:.85rem; color:var(--ink-soft);
     border-left:2px solid var(--accent2); padding-left:12px;
   }
+  .author-line{
+    margin-top:14px; font-size:.82rem; color:var(--accent-strong);
+    font-family:"IBM Plex Mono", monospace; letter-spacing:.02em;
+  }
+  .author-line strong{ color:var(--accent-strong); font-weight:600; }
 
   section{margin-bottom:56px;}
   .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:20px;}
@@ -304,6 +316,7 @@
     <h1 class="title reveal d1">HERO</h1>
     <p class="subtitle reveal d2">Modelo de organizaciones saludables y resilientes: cómo los recursos de una empresa construyen empleados sanos, y estos, resultados organizacionales sostenibles.</p>
     <p class="citation-line reveal d3">Salanova, M., Llorens, S., Cifre, E., &amp; Martínez, I. M. (2012). <em>We need a hero! Toward a validation of the healthy &amp; resilient organization (HERO) model.</em> Group &amp; Organization Management, 37(6), 785–822. — Equipo WANT, Universitat Jaume I.</p>
+    <p class="author-line reveal d3">Elaborado por <strong>Ana Shirley Adarme</strong></p>
   </header>
 
   <!-- ============ 1. QUÉ ES ============ -->
@@ -523,7 +536,7 @@
   </section>
 
   <footer>
-    <span>Elaborado por: <span class="fill-in">Ana Adarme</span> — Maestría, UNAD</span>
+    <span>Elaborado por: <span class="fill-in">Ana Shirley Adarme</span> — Maestría, UNAD</span>
     <span>Gestión de la Felicidad (103098218) · Tarea 2</span>
   </footer>
 
